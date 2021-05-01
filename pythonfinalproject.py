@@ -74,3 +74,8 @@ plt.title('The most used vaccines')
 plt.xlabel('Total vaccinations')
 plt.ylabel('Countries')
 plt.show()
+
+server = app.server
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
