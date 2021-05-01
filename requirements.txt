@@ -1,0 +1,9 @@
+dash==1.20.0
+gunicorn==20.0.4
+itsdangerous==1.1.0
+numpy==1.20.2
+pandas==1.2.4
+plotly==4.14.1
+seaborn==0.11.1
+warnings==0.3.1
+maplotlib==3.4.1
