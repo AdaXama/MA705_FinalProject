@@ -14,7 +14,6 @@ import dash_bootstrap_components as dbc
 import warnings
 warnings.filterwarnings("ignore")
 df = pd.read_csv(r'C:\Users\adaxm\Downloads\country_vaccinations_by_manufacturer.csv')
-print(df)
 df["date"]= pd.to_datetime(df.date)
 
 df["total_vaccinations(count)"]= df.groupby("location").total_vaccinations.tail(1)
@@ -30,7 +29,6 @@ ax.set_xlabel("total_vaccinations(count)")
 plt.title('Top countries with most vaccinations')
 plt.xlabel('Total vaccinations')
 plt.ylabel('Countries')
-plt.show()
 
 
 #Total vaccinations in United States
@@ -39,14 +37,12 @@ sns.lineplot(x= "date",y= "total_vaccinations",data= df[df["location"]=="United 
 plt.title('Total vaccinations in United States')
 plt.xlabel('Date')
 plt.ylabel('Total Vaccinations')
-plt.show()
 
 
 #daily vaccination comparison between countries
 plt.figure(figsize= (15,5))
 sns.lineplot(x= "location",y= "date" ,data= df,hue= "vaccine")
 plt.title('Vaccines by Location')
-plt.show()
 
 #Manufacturer
 x= df.groupby("vaccine")["total_vaccinations(count)"].mean().sort_values(ascending= False).head(20)
@@ -57,14 +53,12 @@ ax.set_xlabel("total_vaccinations(count)")
 plt.title('The most used vaccines')
 plt.xlabel('Total vaccinations')
 plt.ylabel('Countries')
-plt.show()
 
 #Top 5
 x= df.loc[(df.location== "United States") | (df.location== "Germany")| (df.location== "France")| (df.location== "Italy")|(df.location== "China")]
 plt.figure(figsize= (15,5))
 sns.lineplot(x= "date",y= "total_vaccinations" ,data= df,hue= "location")
 plt.title('Top 5 vaccinated countries')
-plt.show()
 
 
 import dash
@@ -94,7 +88,7 @@ app.layout = html.Div([
 ])
 
 # This callback changes the layout of the page based on the URL
-# For each layout read the current URL page "http://127.0.0.1:5000/pagename" and return the layout
+# For each layout read the current URL page and return the layout
 @app.callback(Output('page-content', 'children'), #this changes the content
               [Input('url', 'pathname')]) #this listens for the url in use
 def display_page(pathname): #ADD PAGES#
@@ -105,10 +99,9 @@ def display_page(pathname): #ADD PAGES#
     else:
         return '404' #If page not found return 404
 
-#Runs the server
-
+#Runs the server at http://localhost:5000/      
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(port=5000, host= 'localhost',debug=True)
     
     
     #LAYOUTS
@@ -258,7 +251,7 @@ layout1 = html.Div([
                                     
                                 ],
                                 id="tabs",
-                                active_tab='graph1',
+                                active_tab='Most Vaccinated Countries',
                                 ),
                             html.Div(id="tab-content",className="p-4")
                             ]
